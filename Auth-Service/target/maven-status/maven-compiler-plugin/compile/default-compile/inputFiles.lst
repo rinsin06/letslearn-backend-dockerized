@@ -1,0 +1,15 @@
+D:\LetsLearnApp\AuthenticationService\LetsLearn\Back-End\Auth-Service\src\main\java\com\example\demo\dto\PasswordChangeRequest.java
+D:\LetsLearnApp\AuthenticationService\LetsLearn\Back-End\Auth-Service\src\main\java\com\example\demo\dto\UserCredentialDto.java
+D:\LetsLearnApp\AuthenticationService\LetsLearn\Back-End\Auth-Service\src\main\java\com\example\demo\service\AuthService.java
+D:\LetsLearnApp\AuthenticationService\LetsLearn\Back-End\Auth-Service\src\main\java\com\example\demo\config\CorsConfig.java
+D:\LetsLearnApp\AuthenticationService\LetsLearn\Back-End\Auth-Service\src\main\java\com\example\demo\dto\ResetRequest.java
+D:\LetsLearnApp\AuthenticationService\LetsLearn\Back-End\Auth-Service\src\main\java\com\example\demo\entity\UserCredential.java
+D:\LetsLearnApp\AuthenticationService\LetsLearn\Back-End\Auth-Service\src\main\java\com\example\demo\config\CustomUserDetails.java
+D:\LetsLearnApp\AuthenticationService\LetsLearn\Back-End\Auth-Service\src\main\java\com\example\demo\AuthServiceApplication.java
+D:\LetsLearnApp\AuthenticationService\LetsLearn\Back-End\Auth-Service\src\main\java\com\example\demo\service\JwtService.java
+D:\LetsLearnApp\AuthenticationService\LetsLearn\Back-End\Auth-Service\src\main\java\com\example\demo\controller\AuthController.java
+D:\LetsLearnApp\AuthenticationService\LetsLearn\Back-End\Auth-Service\src\main\java\com\example\demo\config\CustomUserDetailsService.java
+D:\LetsLearnApp\AuthenticationService\LetsLearn\Back-End\Auth-Service\src\main\java\com\example\demo\dto\AuthRequest.java
+D:\LetsLearnApp\AuthenticationService\LetsLearn\Back-End\Auth-Service\src\main\java\com\example\demo\repository\UserCredentialRepository.java
+D:\LetsLearnApp\AuthenticationService\LetsLearn\Back-End\Auth-Service\src\main\java\com\example\demo\config\AuthConfig.java
+D:\LetsLearnApp\AuthenticationService\LetsLearn\Back-End\Auth-Service\src\main\java\com\example\demo\dto\UserInfo.java

@@ -1,0 +1,46 @@
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true # Allow credentials for cross-origin requests
+      routes:
+        - id: USER-SERVICE   # Route for user service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user/**  # Matches requests starting with /user
+          filters:
+            - AuthenticationFilter  # Apply authentication filter
+
+        - id: restaurant-service  # Route for restaurant service (typo in ID?)
+          uri: lb://ADMIN-SERVICE  # Double-check service name (admin vs. restaurant)
+          predicates:
+            - Path=/admin/**  # Matches requests starting with /admin
+          filters:
+            - AuthenticationFilter  # Apply authentication filter
+
+        - id: AUTH-SERVICE  # Route for authentication service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth/**  # Matches requests starting with /auth
+
+        - id: CHAT-SERVICE  # Route for chat service
+          uri: lb://CHAT-SERVICE
+          predicates:
+            - Path=/chat/**  # Matches requests starting with /chat
+          filters:
+            - AuthenticationFilter  # Apply authentication filter
+
+  application:
+    name: API-GATEWAY
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

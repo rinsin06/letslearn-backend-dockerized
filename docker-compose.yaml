@@ -1,0 +1,130 @@
+version: "3.8"
+
+services:
+
+  eureka:
+    build: ./ServiceDiscovery/
+    image: eureka-server:0.1
+    container_name: eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - micro_network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+
+  AUTH-SERVICE:
+    build: ./Auth-Service/
+    image: auth-server:0.1
+    container_name: AUTH-SERVICE
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/authservice
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Rinriy@1997
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    depends_on:
+      - mysqldb
+      - eureka
+      
+    links:
+      - mysqldb
+      - eureka
+      
+    volumes:
+      - /opt/docker/log:/app/log
+    networks:
+      - micro_network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1G
+
+  USER-SERVICE:
+    build: ./UserService/
+    image: userservice-server:0.1
+    container_name: USER-SERVICE
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/userservice?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Rinriy@1997
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    networks:
+      - micro_network
+    depends_on:
+      - mysqldb
+      - eureka
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1G
+
+  ADMIN-SERVICE:
+    build: ./Admin-Service/
+    image: adminservice-server:0.1
+    container_name: ADMIN-SERVICE
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/adminservice?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Rinriy@1997
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    networks:
+      - micro_network
+    depends_on:
+      - mysqldb
+      - eureka
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1G
+
+  API-Gateway:
+    build: ./API-GATEWAY2/
+    image: gateway-server:0.1
+    container_name:  API-Gateway
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    networks:
+      - micro_network
+    depends_on:
+      - eureka
+      - AUTH-SERVICE
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+
+  mysqldb:
+    container_name: mysqldb
+    image: mysql:8.2.0
+    volumes:
+      - ./mysql_user_data:/var/lib/mysql
+    networks:
+      - micro_network
+    environment:
+      MYSQL_ROOT_PASSWORD: Rinriy@1997
+      MYSQL_DATABASE: authservice
+    ports:
+      - "3307:3306"
+
+networks:
+  micro_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.19.0.0/16"
